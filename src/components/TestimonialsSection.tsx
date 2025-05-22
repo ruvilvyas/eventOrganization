@@ -2,14 +2,22 @@
 
 import { useEffect, useState } from "react";
 
+interface Review {
+  _id: string;
+  name: string;
+  role: string;
+  quote: string;
+  image?: string;
+}
+
 export default function TestimonialsSection() {
-const [reviews, setReviews] = useState<Array<{ [key: string]: any }>>([]);
+  const [reviews, setReviews] = useState<Review[]>([]);
   const [form, setForm] = useState({ name: "", role: "", quote: "" });
 
   useEffect(() => {
     fetch("/api/reviews")
-      .then(res => res.json())
-      .then(data => setReviews(data));
+      .then((res) => res.json())
+      .then((data) => setReviews(data));
   }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -21,7 +29,7 @@ const [reviews, setReviews] = useState<Array<{ [key: string]: any }>>([]);
     });
     const newReview = await res.json();
     setReviews([newReview, ...reviews]);
-    setForm({ name: "", role: "", quote: "" }); // Clear form
+    setForm({ name: "", role: "", quote: "" });
   };
 
   return (
@@ -30,7 +38,9 @@ const [reviews, setReviews] = useState<Array<{ [key: string]: any }>>([]);
 
       <div className="relative z-10 max-w-5xl mx-auto text-center">
         <h2 className="text-3xl font-bold text-gray-900 mb-4">give your opinion</h2>
-        <p className="text-gray-700 mb-12 max-w-2xl mx-auto">Loved by organizers and attendees alike.</p>
+        <p className="text-gray-700 mb-12 max-w-2xl mx-auto">
+          Loved by organizers and attendees alike.
+        </p>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="mb-12 grid gap-4 max-w-xl mx-auto">
@@ -62,7 +72,9 @@ const [reviews, setReviews] = useState<Array<{ [key: string]: any }>>([]);
             Submit Review
           </button>
         </form>
+
         <h2 className="text-3xl font-bold text-gray-900 mb-4">What People Say</h2>
+
         {/* Reviews */}
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
           {reviews.map((r, i) => (
@@ -70,7 +82,11 @@ const [reviews, setReviews] = useState<Array<{ [key: string]: any }>>([]);
               key={r._id || i}
               className="bg-white/80 backdrop-blur-lg p-6 rounded-2xl shadow-md hover:shadow-xl transition"
             >
-              <img src={r.image || "/default-user.png"} alt={r.name} className="w-16 h-16 rounded-full mx-auto mb-4 object-cover" />
+              <img
+                src={r.image || "/default-user.png"}
+                alt={r.name}
+                className="w-16 h-16 rounded-full mx-auto mb-4 object-cover"
+              />
               <p className="italic text-gray-800 mb-4">“{r.quote}”</p>
               <h3 className="font-semibold text-gray-900">{r.name}</h3>
               <p className="text-sm text-gray-600">{r.role}</p>
