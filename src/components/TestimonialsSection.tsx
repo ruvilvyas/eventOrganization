@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 export default function TestimonialsSection() {
-  const [reviews, setReviews] = useState<any[]>([]);
+const [reviews, setReviews] = useState<Array<{ [key: string]: any }>>([]);
   const [form, setForm] = useState({ name: "", role: "", quote: "" });
 
   useEffect(() => {

@@ -34,7 +34,7 @@ export default function RSVPForm({ eventTitle }: { eventTitle: string }) {
 
       {submitted ? (
         <div className="bg-green-100 text-green-800 p-4 rounded">
-          ✅ Thanks for registering! We'll contact you soon.
+          ✅ Thanks for registering! We&apos;ll contact you soon.
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4">

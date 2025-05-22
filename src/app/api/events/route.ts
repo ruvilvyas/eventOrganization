@@ -29,8 +29,14 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json(newEvent, { status: 201 });
-  } catch (err: any) {
-    console.error("❌ Error creating event:", err);
+  } catch (err: unknown) {
+  if (err instanceof Error) {
+    console.error("❌ Error creating event:", err.message);
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
+
+  console.error("❌ Unknown error creating event:", err);
+  return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+}
+
 }
