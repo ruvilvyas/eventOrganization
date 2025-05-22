@@ -81,6 +81,7 @@ export default function EventCard({
           {/* Price + Button */}
           <div className="flex items-center justify-between pt-4">
             <p className="text-base font-semibold text-gray-800">₹{price}</p>
+            <p className="text-base font-semibold text-gray-800">₹{ticketsAvailable}</p>
             
             <button
   className="bg-orange-600 text-white text-sm px-4 py-2 rounded-lg hover:bg-green-700 transition"
