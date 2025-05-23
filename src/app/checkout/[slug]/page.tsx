@@ -1,5 +1,11 @@
 import { notFound } from "next/navigation";
 
+interface CheckoutPageProps {
+  params: {
+    slug: string;
+  };
+}
+
 async function getEvent(slug: string) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/events/${slug}`, {
     cache: "no-store",
@@ -9,8 +15,9 @@ async function getEvent(slug: string) {
   return res.json();
 }
 
-export default async function CheckoutPage({ params }: { params: { slug: string } }) {
+export default async function CheckoutPage({ params }: CheckoutPageProps) {
   const event = await getEvent(params.slug);
+
   if (!event) return notFound();
 
   return (
