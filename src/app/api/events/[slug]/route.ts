@@ -1,10 +1,13 @@
-// app/api/events/[slug]/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import { Event } from "@/models/Event";
 
-export async function GET(request: NextRequest, { params }: { params: { slug: string } }) {
-  const { slug } = params;
+// Correct function signature for dynamic API route
+export async function GET(
+  request: NextRequest,
+  context: { params: { slug: string } }
+) {
+  const { slug } = context.params;
 
   await connectDB();
 
