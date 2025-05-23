@@ -1,14 +1,15 @@
-// src/app/api/events/[slug]/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/lib/db";
 import { Event } from "@/models/Event";
 
-// ✅ Correct GET handler for dynamic routes in Next.js App Router
-export async function GET(
-  req: NextRequest,
-  context: { params: { slug: string } }
-) {
-  const { slug } = context.params;
+export async function GET(req: NextRequest) {
+  // Extract slug from the URL pathname
+  const url = req.nextUrl;
+  const slug = url.pathname.split("/").pop(); // get last part of path
+
+  if (!slug) {
+    return NextResponse.json({ message: "Slug is required" }, { status: 400 });
+  }
 
   await connectDB();
   const event = await Event.findOne({ slug });
